@@ -1,0 +1,10 @@
+@forward 'element-plus/theme-chalk/src/common/var.scss' with (
+  $colors: (
+    'primary': (
+      'base': #4789FF,
+    ),
+  ),
+);
+
+// main.ts需要去掉引入index.css，在覆盖scss变量的文件中引入主题样式
+@use 'element-plus/theme-chalk/src/index.scss' as *;
