@@ -5,6 +5,7 @@
         </template>
         <!-- <component :is="aA" />
         <a-A/> -->
+        <!-- <Drag/> -->
     </div>
 </template>
 <script lang="ts">
@@ -13,6 +14,8 @@
 import aA from '/@/views/tmp/aaa.vue'
 import bB from '/@/views/tmp/bbb.vue'
 import aaaa from '/@/views/tmp/aaa-a.vue'
+
+import Drag from '/@/views/tmp/drag.vue'
 
 export default {
     components: {

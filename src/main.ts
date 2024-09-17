@@ -10,12 +10,15 @@ import elSvgIcon from './utils/elSvgIcon';
 
 import VConsole from 'vconsole';
 import svgIcon from './components/SvgIcon.vue'
+// import VueDragResize from 'vue-drag-resize'
+
 
 
 // const vConsole = new VConsole();
 
 const app = createApp(App)
 app.component('svg-icon',svgIcon)
+// app.component('vue-drag-resize', VueDragResize)
 
 
 elSvgIcon.elSvg(app);
