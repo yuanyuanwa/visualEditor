@@ -1,35 +1,78 @@
 <template>
   <div style="position: relative;height: 100%;">
-    <template v-for="(item, index) in view">
-      <component :is="item.name" />
+    <template v-for="(item, index) in designer.pageDataList">
+      <component :is="item.name" @resize="resize" :data="item.style" :tmpId="item.id" />
     </template>
-    <!-- <div class="testDom">
-
-    </div> -->
   </div>
 </template>
 <script lang="ts">
 //画布组件
-import aaaa from '../tmp/aaa-a.vue'
-import aaab from '../tmp/aaa-b.vue'
+import imageTmp from '../tmp/imageTmp.vue'
+import titleTmp from '../tmp/titleTmp.vue'
+import { useDebounce } from '/@/utils/method';
+
+import { storeToRefs } from 'pinia';
+import { useDesigner } from '/@/stores/designer';
+const storesDesigner = useDesigner();
+const { designer } = storeToRefs(storesDesigner);
+
 export default {
   components: {
-    aaaa,
-    aaab
+    imageTmp,
+    titleTmp
   }
 }
 </script>
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue'
+import { Session } from '/@/utils/storage';
 
 const view = ref([
   {
-    name: 'aaaa'
+    name: 'imageTmp'
   },
   {
-    name: 'aaab'
+    name: 'titleTmp'
   },
 ])
+const resize = useDebounce((newRect: any, name: any, id: any) => {
+  changePageDataList(newRect, name, id)
+}, 300)
+
+const changePageDataList = (newRect: any, name: any, id: any) => {
+  // let flag = false
+  designer.value.pageDataList.map((item: any, index: any) => {
+    if (item.id === id) {
+      // flag = true
+      item.style = {
+        width: newRect.width,
+        height: newRect.height,
+        top: newRect.top,
+        left: newRect.left,
+      }
+      return item
+    }
+  })
+  // if (!flag) {
+  //   let data = {
+  //     id: id,
+  //     name: name,
+  //     style: {
+  //       width: newRect.width,
+  //       height: newRect.height,
+  //       top: newRect.top,
+  //       left: newRect.left,
+  //     }
+  //   }
+  //   designer.value.pageDataList.push(data)
+  // }
+  setLocalDesigner()
+}
+
+const setLocalDesigner = () => {
+  Session.remove('designer');
+  Session.set('designer', designer.value);
+};
 
 onMounted(() => { })
 </script>

@@ -8,7 +8,12 @@
 </template>
 
 <script lang="ts" setup>
+import { ref } from 'vue';
 import VueDragResize from 'vue-drag-resize/src'
+// const width = ref()
+// const height = ref()
+// const top = ref()
+// const left = ref()
 const props:any= defineProps({
   data:{}
 })
@@ -17,6 +22,11 @@ const resize = (newRect: any) => {
   props.data.height = newRect.height;
   props.data.top = newRect.top;
   props.data.left = newRect.left
+  // width.value = newRect.width;
+  // height.value = newRect.height;
+  // top.value = newRect.top;
+  // left.value = newRect.left;
+  emit('resize',newRect)
 }
 
 const emit=defineEmits(['resize'])

@@ -7,14 +7,19 @@
 <script setup lang="ts">
 import { onMounted, nextTick, } from 'vue';
 import { useThemeConfig } from '/@/stores/themeConfig';
+import { useDesigner } from '/@/stores/designer';
 import { Session } from '/@/utils/storage';
 const storesThemeConfig = useThemeConfig();
+const storesDesigner = useDesigner();
 import { checkAppNewVersion } from '/@/router/index'
 
 onMounted(() => {
   nextTick(() => {
     if (Session.get('themeConfig')) {
       storesThemeConfig.setThemeConfig({ themeConfig: Session.get('themeConfig') });
+    }
+    if (Session.get('designer')) {
+      storesDesigner.setThemeConfig({ designer: Session.get('designer') });
     }
     // 监听页面打开显示
     document.addEventListener('visibilitychange', function () {
