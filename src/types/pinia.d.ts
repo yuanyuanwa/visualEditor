@@ -12,9 +12,11 @@ declare interface RoutesListState<T = any> {
 // 布局配置
 declare interface ThemeConfigState {
 	themeConfig: {
-		pageType: string;
 		isCollapse: boolean;
-		isEditBox: string;
-		activeTmpID:any;
+	};
+}
+declare interface DesignerState {
+	designer: {
+		pageDataList: T[];
 	};
 }

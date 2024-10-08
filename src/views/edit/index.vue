@@ -2,20 +2,22 @@
   <div class="mainLayout">
     <div class="mainLayout-left">组件栏</div>
     <div class="mainLayout-center">
-      <CanvasPage />
+      <v3-drag-zoom-container :autoResize="false" :minZoom="0.8">
+        <div style="width: 960px;height: 540px;background: white;">
+          <CanvasPage />
+        </div>
+      </v3-drag-zoom-container>
     </div>
     <div class="mainLayout-right">属性栏</div>
   </div>
 </template>
 <script lang="ts" setup>
+import { V3DragZoomContainer } from "v3-drag-zoom";
 import { onMounted } from 'vue'
 
 //组件引入
 //画布组件
-import CanvasPage from '/@/views/canvas/index.vue'
-//画布组件
-import Aaa from '/@/views/tmp/aaa.vue'
-import Bbb from '/@/views/tmp/bbb.vue'
+import CanvasPage from './canvas/index.vue'
 
 
 onMounted(() => { })

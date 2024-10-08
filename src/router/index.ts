@@ -46,7 +46,7 @@ export const router = createRouter({
 })
 
 
-const whiteList = ['/login', '/:path(.*)*', '/401'];
+const whiteList = ['/login', '/showPages', '/:path(.*)*', '/401'];
 
 // function resetRouter() {
 // 	router.getRoutes().forEach((route) => {
