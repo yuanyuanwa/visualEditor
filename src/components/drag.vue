@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%;height: 100%;">
-    <VueDragResize key="123" :parentLimitation="true" :isActive="true" :w="props.data.width" :h="props.data.height" :y="props.data.top" :x="props.data.left"  v-on:resizing="resize"
+    <VueDragResize key="keys" :parentLimitation="true" :isActive="true" :w="props.data.width" :h="props.data.height" :y="props.data.top" :x="props.data.left"  v-on:resizing="resize"
       v-on:dragging="resize">
       <slot></slot>
     </VueDragResize>

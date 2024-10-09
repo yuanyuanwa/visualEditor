@@ -1,14 +1,14 @@
 <template>
   <div style="position: relative;height: 100%;">
     <template v-for="(item, index) in designer.pageDataList">
-      <component :is="item.name" @resize="resize" :data="item.style" :tmpId="item.id" />
+      <component :is="item.name" @resize="resize" :data="item.style" :tmpId="item.id" :isEdit="true"/>
     </template>
   </div>
 </template>
 <script lang="ts">
 //画布组件
-import imageTmp from '../tmp/imageTmp.vue'
-import titleTmp from '../tmp/titleTmp.vue'
+import imageTmp from '/@/components/tmp/imageTmp.vue'
+import titleTmp from '/@/components/tmp/titleTmp.vue'
 import { useDebounce } from '/@/utils/method';
 
 import { storeToRefs } from 'pinia';

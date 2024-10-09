@@ -45,7 +45,7 @@ const { designer } = storeToRefs(storesDesigner);
 import CanvasPage from './canvas/index.vue'
 
 const goPage = () => {
-  window.open('http://localhost:8821/showPages')
+  window.open('http://localhost:8866/showPages')
 }
 
 const addDom = (type: string) => {

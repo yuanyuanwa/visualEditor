@@ -1,11 +1,11 @@
 <template>
   <div v-bind:style="styleObject" class="scale-box">
     <div class="child" v-for="(item, index) in curPageDataList" :key="item.id" :style="item.style">
-      {{ item.id }}
+      <component :is="item.name" :data="item.style" :tmpId="item.id" :isEdit="false"/>
     </div>
   </div>
 </template>
-<script lang="ts" setup>
+<script lang="ts">
 import { onMounted, onUnmounted, ref } from 'vue'
 import debounce from "lodash/debounce";
 import { computed, reactive } from "vue";
@@ -15,6 +15,17 @@ import { useDesigner } from '/@/stores/designer';
 const storesDesigner = useDesigner();
 const { designer } = storeToRefs(storesDesigner);
 
+import imageTmp from '/@/components/tmp/imageTmp.vue'
+import titleTmp from '/@/components/tmp/titleTmp.vue'
+
+export default {
+  components: {
+    imageTmp,
+    titleTmp
+  }
+}
+</script>
+<script lang="ts" setup>
 let that: any = reactive({
   width: 1920,
   height: 1080,
@@ -47,12 +58,13 @@ onMounted(() => {
   designer.value.pageDataList.map((item: any) => {
     let data: any = {
       id: item.id,
+      name: item.name,
       style: {
         width: item.style.width * 2 + 'px',
         height: item.style.height * 2 + 'px',
         top: item.style.top * 2 + 'px',
         left: item.style.left * 2 + 'px',
-        background: 'pink'
+        background:'pink'
       }
     }
     curPageDataList.value.push(data)
