@@ -18,5 +18,6 @@ declare interface ThemeConfigState {
 declare interface DesignerState {
 	designer: {
 		pageDataList: T[];
+		editItem:any,
 	};
 }

@@ -5,8 +5,8 @@
       <div style="cursor: pointer;">
         <div>
           基本组件：
-          <span @click="addDom('imageTmp')">图片</span>、
-          <span @click="addDom('titleTmp')">标题</span>、
+          <span @click="addDom('image-tmp')">图片</span>、
+          <span @click="addDom('title-tmp')">标题</span>、
           <span>方形</span>、
           <span>圆形</span>、
         </div>
@@ -28,7 +28,9 @@
         </div>
       </v3-drag-zoom-container>
     </div>
-    <div class="mainLayout-right">属性栏</div>
+    <div class="mainLayout-right">
+      <EditField />
+    </div>
   </div>
 </template>
 <script lang="ts" setup>
@@ -43,6 +45,7 @@ const { designer } = storeToRefs(storesDesigner);
 
 //画布组件
 import CanvasPage from './canvas/index.vue'
+import EditField from './editField/index.vue'
 
 const goPage = () => {
   window.open('http://localhost:8866/showPages')
@@ -56,9 +59,9 @@ const addDom = (type: string) => {
       width: 200,
       height: 200,
       top: 0,
-      left: 200
+      left: 200,
     },
-    form: {}
+    ownStyle: {}
   }
   designer.value.pageDataList.push(data)
   setLocalDesigner()

@@ -1,7 +1,7 @@
 <template>
   <div v-bind:style="styleObject" class="scale-box">
-    <div class="child" v-for="(item, index) in curPageDataList" :key="item.id" :style="item.style">
-      <component :is="item.name" :data="item.style" :tmpId="item.id" :isEdit="false"/>
+    <div class="child" v-for="(item, index) in curPageDataList" :key="item.id" :style="{...item.style,...item.ownStyle}">
+      <component :is="item.name" :data="item" :tmpId="item.id" :isEdit="false" />
     </div>
   </div>
 </template>
@@ -57,16 +57,15 @@ onMounted(() => {
   curPageDataList.value = []
   designer.value.pageDataList.map((item: any) => {
     let data: any = {
-      id: item.id,
-      name: item.name,
-      style: {
-        width: item.style.width * 2 + 'px',
-        height: item.style.height * 2 + 'px',
-        top: item.style.top * 2 + 'px',
-        left: item.style.left * 2 + 'px',
-        background:'pink'
-      }
+      ...item
     }
+    data.style = {
+      width: item.style.width * 2 + 'px',
+      height: item.style.height * 2 + 'px',
+      top: item.style.top * 2 + 'px',
+      left: item.style.left * 2 + 'px',
+    }
+    console.log(123,data)
     curPageDataList.value.push(data)
   })
   getScale();

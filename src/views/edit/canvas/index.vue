@@ -1,12 +1,14 @@
 <template>
   <div style="position: relative;height: 100%;">
     <template v-for="(item, index) in designer.pageDataList">
-      <component :is="item.name" @resize="resize" :data="item.style" :tmpId="item.id" :isEdit="true"/>
+      <component @selectComponent="selectComponent" :is="item.name" @resize="resize" :data="item" :tmpId="item.id"
+        :isEdit="true" />
     </template>
   </div>
 </template>
 <script lang="ts">
 //画布组件
+import customComponents from '/@/components/tmp/index'
 import imageTmp from '/@/components/tmp/imageTmp.vue'
 import titleTmp from '/@/components/tmp/titleTmp.vue'
 import { useDebounce } from '/@/utils/method';
@@ -19,7 +21,7 @@ const { designer } = storeToRefs(storesDesigner);
 export default {
   components: {
     imageTmp,
-    titleTmp
+    titleTmp,
   }
 }
 </script>
@@ -40,10 +42,8 @@ const resize = useDebounce((newRect: any, name: any, id: any) => {
 }, 300)
 
 const changePageDataList = (newRect: any, name: any, id: any) => {
-  // let flag = false
   designer.value.pageDataList.map((item: any, index: any) => {
     if (item.id === id) {
-      // flag = true
       item.style = {
         width: newRect.width,
         height: newRect.height,
@@ -53,19 +53,15 @@ const changePageDataList = (newRect: any, name: any, id: any) => {
       return item
     }
   })
-  // if (!flag) {
-  //   let data = {
-  //     id: id,
-  //     name: name,
-  //     style: {
-  //       width: newRect.width,
-  //       height: newRect.height,
-  //       top: newRect.top,
-  //       left: newRect.left,
-  //     }
-  //   }
-  //   designer.value.pageDataList.push(data)
-  // }
+  // setLocalDesigner()
+}
+
+const selectComponent = (itemData: any) => {
+  designer.value.pageDataList.map((item: any, index: any) => {
+    if (item.id === itemData.id) {
+      designer.value.editItem = item
+    }
+  })
   setLocalDesigner()
 }
 
@@ -74,7 +70,9 @@ const setLocalDesigner = () => {
   Session.set('designer', designer.value);
 };
 
-onMounted(() => { })
+storesDesigner.$subscribe((mutate, state) => {
+  setLocalDesigner()
+})
 </script>
 <style lang="scss" scoped>
 .testDom {

@@ -4,6 +4,7 @@ export const useDesigner = defineStore('designer', {
   state: (): DesignerState => ({
     designer: {
       pageDataList: [],
+      editItem:{},
     },
   }),
   actions: {

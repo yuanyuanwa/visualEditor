@@ -33,7 +33,7 @@
 		"src/**/*.vue",
 		"src/**/*.tsx",
 		"src/**/*.d.ts"
-	], 
+, "src/components/tmp/index.js"	], 
 	"exclude": [
 		"node_modules",
 		"dist"
