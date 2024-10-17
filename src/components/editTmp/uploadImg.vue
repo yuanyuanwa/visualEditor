@@ -4,16 +4,17 @@
     <el-dialog v-model="dialogVisible" title="图片裁剪" width="50%">
       <el-row>
         <el-col :xs="24" :md="13" :style="{ height: '350px' }">
-          <VueCropper ref="cropperRef" :img="options.img" :info="true" :infoTrue="options.infoTrue"
-            :auto-crop="options.autoCrop" :fixed-box="options.fixedBox" :fixedNumber="options.fixedNumber"
-            :fixed="options.fixed" :centerBox="options.centerBox" @realTime="realTime">
+          <VueCropper ref="cropperRef" :autoCropWidth="options.autoCropWidth" :autoCropHeight="options.autoCropHeight"
+            :img="options.img" :info="true" :infoTrue="options.infoTrue" :auto-crop="options.autoCrop"
+            :fixed-box="options.fixedBox" :fixedNumber="options.fixedNumber" :fixed="options.fixed"
+            :centerBox="options.centerBox" @realTime="realTime">
           </VueCropper>
         </el-col>
-        <el-col :xs="24" :md="11" :style="{ height: '350px' }">
-          <div class="avatar-upload-preview">
-            <img :src="previews.url" :style="previews.img" />
+        <div :style="getStyle">
+          <div :style="previewFileStyle">
+            <img :style="previews.img" :src="previews.url" alt="">
           </div>
-        </el-col>
+        </div>
       </el-row>
       <el-row class="ptb2">
         <el-col :lg="2" :md="2">
@@ -49,7 +50,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, ref, toRefs, onMounted } from "vue";
+import { reactive, ref, toRefs, onMounted, watch } from "vue";
 import VueCropper from "vue-cropper/src/vue-cropper.vue";
 //   import utils from "@/utils/utils";
 // 父级传过来的图片 interface
@@ -92,7 +93,7 @@ const options: Options = reactive({
   outputSize: 0.5, // 裁剪生成图片的质量 [1至0.1]
   outputType: "jpeg", // 裁剪生成图片的格式
   canScale: false, // 图片是否允许滚轮缩放
-  fixed: false, // 是否开启截图框宽高固定比例
+  fixed: true, // 是否开启截图框宽高固定比例
   fixedNumber: [1, 1], // 截图框的宽高比例 需要配合centerBox一起使用才能生效
   full: true, // 是否输出原图比例的截图
   canMoveBox: false, // 截图框能否拖动
@@ -124,9 +125,22 @@ let changeScale = (num: number) => {
 let refreshCrop = () => {
   cropperRef.value.refresh();
 };
+// 缩放的格式
+const tempScale = ref<number>(0)
 // 裁剪之后的数据
 const realTime = (data: any) => {
   previews.value = data;
+  tempScale.value = props.previewWidth / data.w
+  previewFileStyle.value = {
+    width: data.w + 'px',
+    height: data.h + 'px',
+    margin: 0,
+    overflow: 'hidden',
+    zoom: tempScale.value,
+    position: 'relative',
+    border: '1px solid #e8e8e8',
+    'border-radius': '2px'
+  }
 };
 // 覆盖默认上传行为
 let requestUpload = () => { };
@@ -162,6 +176,7 @@ let uploadImg = () => {
     let formData = dataURLtoFile(data, 'fileName.jpg')
     // 添加上传接口及相关操作
     console.log(formData);
+    options.img = URL.createObjectURL(formData!)
     dialogVisible.value = false;
   });
 };
@@ -182,16 +197,38 @@ onMounted(() => {
     options.img = avatar.value;
   }, 100);
 });
+const getStyle = ref<IStyle>({
+  width: '',
+  height: ''
+})
+const previewFileStyle = ref({})
+watch(
+  () => props,
+  () => {
+    /* 预览样式 */
+    getStyle.value = {
+      width: props.previewWidth + 'px', // 预览宽度
+      height: props.previewWidth / props.fixedNumber[0] + 'px' // 预览高度
+    }
+    // // 上传格式tips信息
+    // acceptType.value = []
+    // for (let i = 0; i < props.allowTypeList.length; i++) {
+    //   acceptType.value.push(props.allowTypeList[i].toUpperCase())
+    // }
+  }, {
+  deep: true
+}
+)
 </script>
 
 <style scoped lang="scss">
 .avatar-upload-preview {
-  position: absolute;
-  top: 50%;
-  transform: translate(50%, -50%);
+  // position: absolute;
+  // top: 50%;
+  // transform: translate(50%, -50%);
   width: 200px;
   height: 200px;
-  border-radius: 50%;
+  //border-radius: 50%;
   box-shadow: 0 0 4px #ccc;
   overflow: hidden;
 }
@@ -217,11 +254,11 @@ onMounted(() => {
   -moz-osx-font-smoothing: grayscale;
   cursor: pointer;
   line-height: 110px;
-  border-radius: 50%;
+  // border-radius: 50%;
 }
 
 .img-circle {
-  border-radius: 50%;
+  // border-radius: 50%;
 }
 
 .img-lg {

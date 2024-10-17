@@ -44,3 +44,18 @@ export const useDebounce = (fn: Function, delay: number) => {
     }, delay);
   };
 };
+
+export const convertBase64UrlToBlob = (urlData: any) => {
+  let bytes = window.atob(urlData.split(",")[1]); //去掉url的头，并转换为byte
+  //处理异常,将ascii码小于0的转换为大于0
+  let ab = new ArrayBuffer(bytes.length);
+  let ia = new Uint8Array(ab);
+  for (var i = 0; i < bytes.length; i++) {
+    ia[i] = bytes.charCodeAt(i);
+  }
+  let name = ''
+  return new File([ab], name, { type: 'image/jpg' })
+  // return new Blob([ab], {
+  //   type: "image/jpg",
+  // });
+}
