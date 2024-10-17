@@ -6,4 +6,5 @@ declare module '*.vue' {
 declare module 'dom-to-image'
 declare module 'v3-drag-zoom'
 declare module 'vue-drag-resize/src'
+declare module 'vue-cropper'
 // xx即你包不能找到声明的包名

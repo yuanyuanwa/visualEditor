@@ -2,9 +2,10 @@
   <div>
     {{ designer }}
     <component :is="getComponent(designer.editItem)" :editItem="designer.editItem" :isEdit="true" />
+  
   </div>
 </template>
-<script lang="ts">
+<script lang="ts" >
 import imageEdit from '/@/components/editTmp/imageEdit.vue'
 import titleEdit from '/@/components/editTmp/titleEdit.vue'
 
@@ -21,7 +22,7 @@ export default {
 }
 </script>
 <script lang="ts" setup>
-
+import UserAvatar from "/@/components/editTmp/uploadImg.vue";
 //获取到正在编辑的组件对应的编辑组件
 const getComponent = (editItem: any) => {
   if (editItem && editItem.name) {
