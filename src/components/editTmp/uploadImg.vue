@@ -1,6 +1,8 @@
 <template>
   <div class="user-info-head" @click="editCropper()">
     <el-image :src="options.img" title="点击上传头像" class="img-circle img-lg" />
+   <div>123</div>
+    <img :src="imageUrl" />
     <el-dialog v-model="dialogVisible" title="图片裁剪" width="50%">
       <el-row>
         <el-col :xs="24" :md="13" :style="{ height: '350px' }">
@@ -10,11 +12,15 @@
             :centerBox="options.centerBox" @realTime="realTime">
           </VueCropper>
         </el-col>
-        <div :style="getStyle">
-          <div :style="previewFileStyle">
-            <img :style="previews.img" :src="previews.url" alt="">
+        <!-- <div class="slice_pre">
+          <div :style="getStyle"  class="avatar">
+            <div :style="previewFileStyle">
+              <img :style="previews.img" :src="previews.url" alt="">
+            </div>
           </div>
-        </div>
+
+        </div> -->
+
       </el-row>
       <el-row class="ptb2">
         <el-col :lg="2" :md="2">
@@ -89,15 +95,15 @@ interface Options {
 const options: Options = reactive({
   img: "", // 需要剪裁的图片
   autoCrop: true, // 是否默认生成截图框
-  autoCropWidth: 150, // 默认生成截图框的宽度
-  autoCropHeight: 150, // 默认生成截图框的长度
+  autoCropWidth: 192, // 默认生成截图框的宽度
+  autoCropHeight: 108, // 默认生成截图框的长度
   fixedBox: false, // 是否固定截图框的大小 不允许改变
   info: true, // 裁剪框的大小信息
   outputSize: 0.5, // 裁剪生成图片的质量 [1至0.1]
   outputType: "jpeg", // 裁剪生成图片的格式
   canScale: false, // 图片是否允许滚轮缩放
   fixed: true, // 是否开启截图框宽高固定比例
-  fixedNumber: [1, 1], // 截图框的宽高比例 需要配合centerBox一起使用才能生效
+  fixedNumber: [192, 108], // 截图框的宽高比例 需要配合centerBox一起使用才能生效
   full: true, // 是否输出原图比例的截图
   canMoveBox: false, // 截图框能否拖动
   original: false, // 上传图片按照原始比例渲染
@@ -174,28 +180,30 @@ function editCropper() {
   dialogVisible.value = true;
 }
 // 提交
+const imageUrl = ref('/selfservice/selfcust/api/portal_web/site/2861/0b1422db-0a9d-4f16-8b27-dfc105758a05.jpg')
 let uploadImg = () => {
   cropperRef.value.getCropData((data: any) => {
     let formData = dataURLtoFile(data, 'fileName.jpg')
     // 添加上传接口及相关操作
     console.log(formData);
-    
+
     //------------
     // let headers = {
     //   "Content-Type": "multipart/form-data",
-    //   'X-Token': Session.get('token'),
+    //   'X-Token': "self_55bafb7e-3547-4461-b9a0-872b4ec5f6d1",
     //   'Cache-Control': 'no-cache',
     // };
-    // let fileObj = param.file;
+    // let fileObj = formData;
     // let fd = new FormData();
     // fd.append("file", fileObj);
-    // fd.append("netSiteId", Session.get('netsiteId'));
+    // fd.append("netSiteId", '2861');
     // portalTemplateEditValueUploadImg(fd, headers)
     //   .then((res: any) => {
     //     if (res.status === 200) {
     //       if (res.data.code == 0) {
     //         ElMessage.success("操作成功");
-    //         console.log(123,res)
+    //         console.log(123, res)
+    //         imageUrl.value = res.data.data
     //         // props.editFormData.bgImg = res.data.data
     //         // themeConfig.value.isSysImg = 1;
     //         // setLocalThemeConfig();
@@ -238,10 +246,10 @@ watch(
   () => props,
   () => {
     /* 预览样式 */
-    getStyle.value = {
-      width: props.previewWidth + 'px', // 预览宽度
-      height: props.previewWidth / props.fixedNumber[0] + 'px' // 预览高度
-    }
+    // getStyle.value = {
+    //   width: props.previewWidth + 'px', // 预览宽度
+    //   height: props.previewWidth / props.fixedNumber[0] + 'px' // 预览高度
+    // }
     // // 上传格式tips信息
     // acceptType.value = []
     // for (let i = 0; i < props.allowTypeList.length; i++) {

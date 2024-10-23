@@ -36,15 +36,17 @@ export default ({ mode }) => {
     resolve: { alias },
     base: process.env.VITE_MODE == 'production' ? '/' : '/',
     server: {
-      proxy: {
-        '/api': {
-          // target: '', //后端本地
-          // target: '', //测试环境
-          changeOrigin: true,
-          ws: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
-        },
-      }
+     //解决跨域
+     proxy: {
+      '/selfservice/selfcust/api': {
+        target: 'http://192.168.81.63:19006/selfservice/',//测试环境
+        // target: 'http://132.122.237.188:19006/selfservice/',//pb本地
+        // target: 'http://132.122.237.177:19006/selfservice/',//wd本地
+        changeOrigin: true, //支持跨域
+        ws: true,
+        rewrite: (path) => path.replace(/^\/selfservice\/selfcust\/api/, ""),
+      },
+    }
     },
     define: {
       __APP_VERSION__: now,

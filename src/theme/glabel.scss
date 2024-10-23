@@ -1,0 +1,16 @@
+.slice_pre {
+    border-radius: 6px;
+    width: 305px;
+    height: 160px;
+    background: url('/@/assets/img/base.png') repeat 0 0 / 20px 20px;
+    text-align: center;
+    box-sizing: border-box;
+    display: table-cell;
+    vertical-align: middle;
+    line-height: 160px;
+    .avatar {
+        max-height: 160px;
+        max-width: 305px;
+        vertical-align: middle;
+    }
+}
