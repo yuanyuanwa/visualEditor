@@ -8,8 +8,9 @@
         <div class="cropper_left">
           <vueCropper :style="{ width: '400px' }" ref="cropperRef" :img="options.img" :info="true"
             :info-true="options.infoTrue" :auto-crop="options.autoCrop" :fixed-box="options.fixedBox"
-            :can-move="options.canMoveBox" :can-scale="options.canScale" :autoCropWidth="options.autoCropWidth" :autoCropHeight="options.autoCropHeight" :fixed-number="fixedNumber"
-            :fixed="options.fixed" :full="options.full" :center-box="options.centerBox" @real-time="previewHandle" />
+            :can-move="options.canMoveBox" :can-scale="options.canScale" :autoCropWidth="options.autoCropWidth"
+            :autoCropHeight="options.autoCropHeight" :fixed-number="fixedNumber" :fixed="options.fixed"
+            :full="options.full" :center-box="options.centerBox" @real-time="previewHandle" />
           <div class="reupload_box">
             <div class="reupload_text" @click="uploadFile('reload')">
               重新上传
@@ -233,7 +234,7 @@ const cropperSuccess = async (dataFile: File) => {
 
 // base64转图片文件
 const dataURLtoFile = (dataUrl: string, filename: string) => {
-  const arr = dataUrl.split(',')
+  const arr: any = dataUrl.split(',')
   const mime = arr[0].match(/:(.*?);/)[1]
   const bstr = atob(arr[1])
   let len = bstr.length
@@ -280,7 +281,6 @@ watch(
       width: props.previewWidth + 'px', // 预览宽度
       height: props.previewWidth / props.fixedNumber[0] + 'px' // 预览高度
     }
-    console.log(!23,getStyle.value)
     // 上传格式tips信息
     acceptType.value = []
     for (let i = 0; i < props.allowTypeList.length; i++) {

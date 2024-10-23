@@ -52,7 +52,10 @@
 <script lang="ts" setup>
 import { reactive, ref, toRefs, onMounted, watch } from "vue";
 import VueCropper from "vue-cropper/src/vue-cropper.vue";
-//   import utils from "@/utils/utils";
+import { Session } from '/@/utils/storage';
+import { ElMessage } from 'element-plus';
+import { portalTemplateEditValueUploadImg } from '/@/api/portalEdit'
+// import utils from "@/utils/utils";
 // 父级传过来的图片 interface
 interface Props {
   avatar: string;
@@ -176,6 +179,35 @@ let uploadImg = () => {
     let formData = dataURLtoFile(data, 'fileName.jpg')
     // 添加上传接口及相关操作
     console.log(formData);
+    
+    //------------
+    // let headers = {
+    //   "Content-Type": "multipart/form-data",
+    //   'X-Token': Session.get('token'),
+    //   'Cache-Control': 'no-cache',
+    // };
+    // let fileObj = param.file;
+    // let fd = new FormData();
+    // fd.append("file", fileObj);
+    // fd.append("netSiteId", Session.get('netsiteId'));
+    // portalTemplateEditValueUploadImg(fd, headers)
+    //   .then((res: any) => {
+    //     if (res.status === 200) {
+    //       if (res.data.code == 0) {
+    //         ElMessage.success("操作成功");
+    //         console.log(123,res)
+    //         // props.editFormData.bgImg = res.data.data
+    //         // themeConfig.value.isSysImg = 1;
+    //         // setLocalThemeConfig();
+    //       } else {
+    //         ElMessage.error(res.data.message);
+    //       }
+    //     }
+    //   })
+    //   .catch((err: any) => {
+    //     ElMessage.error(err.response.data.message || err);
+    //   });
+    //-------------
     options.img = URL.createObjectURL(formData!)
     dialogVisible.value = false;
   });
@@ -197,7 +229,7 @@ onMounted(() => {
     options.img = avatar.value;
   }, 100);
 });
-const getStyle = ref<IStyle>({
+const getStyle = ref({
   width: '',
   height: ''
 })

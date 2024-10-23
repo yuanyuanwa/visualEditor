@@ -83,19 +83,19 @@ onMounted(() => { })
   .mainLayout-left {
     width: 20%;
     height: 100%;
-    background: rgb(247, 242, 243);
+    //background: rgb(247, 242, 243);
   }
 
   .mainLayout-center {
     width: 60%;
     height: 100%;
-    background: rgb(245, 233, 234);
+    //background: rgb(245, 233, 234);
   }
 
   .mainLayout-right {
     width: 20%;
     height: 100%;
-    background: rgb(246, 228, 231);
+    //background: rgb(246, 228, 231);
   }
 
 }
